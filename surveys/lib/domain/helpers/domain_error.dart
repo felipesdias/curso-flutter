@@ -1,1 +1,1 @@
-enum DomainError { UNEXPECTED }
+enum DomainError { UNEXPECTED, INVALID_CREDENTIALS }
