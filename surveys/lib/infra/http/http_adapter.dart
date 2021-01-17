@@ -27,6 +27,8 @@ Map _handleResponse(Response response) {
       throw HttpError.BAD_REQUEST;
     case 401:
       throw HttpError.UNAUTHORIZED;
+    case 403:
+      throw HttpError.FORBIDDEN;
     case 500:
     default:
       throw HttpError.SERVER_ERROR;
