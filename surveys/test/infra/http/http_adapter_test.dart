@@ -33,6 +33,10 @@ void main() {
       mockRequest().thenAnswer((_) async => Response(body, statusCode));
     }
 
+    void mockError() {
+      mockRequest().thenThrow(Exception());
+    }
+
     test('Should call post with correct values', () async {
       mockResponse(200);
       await sut.request(url: url, method: 'post', body: {'any_key': 'any_value'});
@@ -95,6 +99,12 @@ void main() {
 
     test('Should return ServerError if post returns 500', () async {
       mockResponse(500);
+      final future = sut.request(url: url, method: 'post');
+      expect(future, throwsA(HttpError.SERVER_ERROR));
+    });
+
+    test('Should return ServerError if post throws', () async {
+      mockError();
       final future = sut.request(url: url, method: 'post');
       expect(future, throwsA(HttpError.SERVER_ERROR));
     });
