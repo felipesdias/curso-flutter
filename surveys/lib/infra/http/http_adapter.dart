@@ -25,6 +25,8 @@ Map _handleResponse(Response response) {
       return response.body.isEmpty ? null : jsonDecode(response.body);
     case 400:
       throw HttpError.BAD_REQUEST;
+    case 401:
+      throw HttpError.UNAUTHORIZED;
     case 500:
     default:
       throw HttpError.SERVER_ERROR;
