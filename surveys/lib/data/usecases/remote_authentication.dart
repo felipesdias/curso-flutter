@@ -7,7 +7,7 @@ import '../../domain/usecases/authentication.dart';
 
 import '../http/http.dart';
 
-class RemoteAuthentication {
+class RemoteAuthentication implements Authentication {
   final HttpClient httpClient;
   final String url;
 
@@ -17,13 +17,10 @@ class RemoteAuthentication {
     final body = RemoteAuthenticationParams.fromDomain(params).toJson();
 
     try {
-      final httpRespose =
-          await httpClient.request(url: url, method: 'post', body: body);
+      final httpRespose = await httpClient.request(url: url, method: 'post', body: body);
       return RemoteAccountModel.fromJson(httpRespose).toEntity();
     } on HttpError catch (error) {
-      throw error == HttpError.UNAUTHORIZED
-          ? DomainError.INVALID_CREDENTIALS
-          : DomainError.UNEXPECTED;
+      throw error == HttpError.UNAUTHORIZED ? DomainError.INVALID_CREDENTIALS : DomainError.UNEXPECTED;
     }
   }
 }
@@ -35,8 +32,7 @@ class RemoteAuthenticationParams {
   RemoteAuthenticationParams({@required this.email, @required this.password});
 
   factory RemoteAuthenticationParams.fromDomain(AuthenticationParams params) =>
-      RemoteAuthenticationParams(
-          email: params.email, password: params.password);
+      RemoteAuthenticationParams(email: params.email, password: params.password);
 
   Map toJson() => {'email': email, 'password': password};
 }
