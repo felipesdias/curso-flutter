@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 32, bottom: 32),
-                  child: RaisedButton(onPressed: () {}, child: Text('Entrar'.toUpperCase())),
+                  child: RaisedButton(onPressed: null, child: Text('Entrar'.toUpperCase())),
                 ),
                 FlatButton.icon(onPressed: () {}, icon: Icon(Icons.person), label: Text('Criar Conta'))
               ],
