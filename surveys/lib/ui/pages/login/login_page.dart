@@ -39,14 +39,25 @@ class LoginPage extends StatelessWidget {
                     }),
                 Padding(
                   padding: EdgeInsets.only(top: 8),
-                  child: TextFormField(
-                      decoration: InputDecoration(labelText: 'Senha', icon: Icon(Icons.lock, color: Theme.of(context).primaryColorLight)),
-                      obscureText: true,
-                      onChanged: presenter.validatePassword),
+                  child: StreamBuilder<String>(
+                      stream: presenter.passwordErrorStream,
+                      builder: (context, snapshot) {
+                        return TextFormField(
+                            decoration: InputDecoration(
+                                labelText: 'Senha',
+                                icon: Icon(Icons.lock, color: Theme.of(context).primaryColorLight),
+                                errorText: snapshot.data?.isEmpty == true ? null : snapshot.data),
+                            obscureText: true,
+                            onChanged: presenter.validatePassword);
+                      }),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 32, bottom: 32),
-                  child: RaisedButton(onPressed: null, child: Text('Entrar'.toUpperCase())),
+                  child: StreamBuilder<bool>(
+                      stream: presenter.isFormValidStream,
+                      builder: (context, snapshot) {
+                        return RaisedButton(onPressed: snapshot.data == true ? () {} : null, child: Text('Entrar'.toUpperCase()));
+                      }),
                 ),
                 FlatButton.icon(onPressed: () {}, icon: Icon(Icons.person), label: Text('Criar Conta'))
               ],
