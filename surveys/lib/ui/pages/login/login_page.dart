@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../components/components.dart';
+import 'login_presenter.dart';
+import '../../components/components.dart';
 
 class LoginPage extends StatelessWidget {
+  final LoginPresenter presenter;
+
+  LoginPage(this.presenter);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,13 +30,14 @@ class LoginPage extends StatelessWidget {
                         color: Theme.of(context).primaryColorLight,
                       )),
                   keyboardType: TextInputType.emailAddress,
+                  onChanged: presenter.validateEmail,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 8),
                   child: TextFormField(
-                    decoration: InputDecoration(labelText: 'Senha', icon: Icon(Icons.lock, color: Theme.of(context).primaryColorLight)),
-                    obscureText: true,
-                  ),
+                      decoration: InputDecoration(labelText: 'Senha', icon: Icon(Icons.lock, color: Theme.of(context).primaryColorLight)),
+                      obscureText: true,
+                      onChanged: presenter.validatePassword),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 32, bottom: 32),
